@@ -1,28 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Striker_R : MonoBehaviour
 {
     Rigidbody rb;
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if(Input.GetMouseButtonDown(1)) 
+        if (Input.GetMouseButtonDown(1))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if(Physics.Raycast(ray, out hit))
+            if (Physics.Raycast(ray, out hit))
             {
-                transform.position = new Vector3(hit.point.x, transform.position.y, transform.position.z);
+                float hitX = Mathf.Clamp(hit.point.x, -3f, 3f);
+                Vector3 newPostion = new Vector3(hitX, transform.position.y, transform.position.z);
+                rb.MovePosition(newPostion);
             }
         }
-        
     }
 }
