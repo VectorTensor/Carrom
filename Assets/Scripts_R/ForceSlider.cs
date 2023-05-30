@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ForceSlider : MonoBehaviour
 {
     public Slider forceSlider;
-
+    
     float minValue = 0f;
     float maxValue = 1f;
     float speed = 2f;
@@ -13,9 +13,14 @@ public class ForceSlider : MonoBehaviour
     bool isIncreasing = true;
     bool isRunning = true;
 
+    bool animate = true;
     IEnumerator coroutine;
 
     public static float currentValue;
+
+    public delegate void onForceSet();
+
+    public static onForceSet onforceset;
 
     private void Start()
     {
@@ -24,7 +29,7 @@ public class ForceSlider : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(0))
         {
             isRunning = !isRunning;
 
@@ -38,13 +43,17 @@ public class ForceSlider : MonoBehaviour
             }
 
             currentValue = forceSlider.value;
+            Strikeforce.magnitude = currentValue;
+            onforceset?.Invoke();
             Debug.Log("Current Value = " + currentValue);
+            gameObject.SetActive(false);
+            
         }
     }
 
     private IEnumerator AnimateForceBar()
     {
-        while(true)
+        while(animate)
         {
             if (isIncreasing)
             {
