@@ -9,6 +9,9 @@ public class ForceDirection : MonoBehaviour
     public float maximum = 45.0f;
     private float Rot = 0;
 
+    [SerializeField] GameObject topVector;
+    [SerializeField] GameObject bottomVector;
+    [SerializeField] GameObject force_slider;
     public enum RotationAxes {
         MouseXAndY = 0,
         MouseX =1,
@@ -19,6 +22,17 @@ public class ForceDirection : MonoBehaviour
             Rot += Input.GetAxis("Mouse X") * sensitivity;
             Rot = Mathf.Clamp(Rot, minimum, maximum);
             transform.localEulerAngles = new Vector3(0,Rot,  0);
+
+
+            if (Input.GetMouseButtonDown(0)){
+                Vector3 direction = topVector.transform.position - bottomVector.transform.position;
+                Strikeforce.direction = direction;
+                Debug.Log(Strikeforce.direction);
+                gameObject.SetActive(false);
+                force_slider.SetActive(true);
+
+//                Debug.Log("give magniture");
+            }
 
    } 
 

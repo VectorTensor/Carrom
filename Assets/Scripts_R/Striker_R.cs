@@ -4,11 +4,12 @@ using UnityEngine;
 public class Striker_R : MonoBehaviour
 {
     Rigidbody rb;
-    float forceMultipler = 2000f;
     bool confirmButtonPressed = false;
-
+   [SerializeField] GameObject confirmButton;
+    [SerializeField]GameObject arrow ;
     private void Start()
     {
+        arrow.SetActive(false);
         rb = GetComponent<Rigidbody>();
     }
 
@@ -31,21 +32,27 @@ public class Striker_R : MonoBehaviour
         }
         
 
-        if(Input.GetMouseButtonDown(0)) 
-        {
-            Debug.Log("ForceSlider.currentValue = " + ForceSlider.currentValue);
-            Vector3 force = Vector3.forward * ForceSlider.currentValue * forceMultipler;
-            rb.AddForce(force);
+    }
 
-            //Check if striker is moving or not
-            //if yes wait for striker to stop moving 
-            //if not StartCoroutine(ResetStrikerPos());
-        }
+    void OnEnable(){
+        
+        ForceSlider.onforceset += Attack;
+
+    }
+
+    void Attack(){
+
+     Debug.Log("Add force ");
+    Rigidbody rb = GetComponent<Rigidbody>();
+    rb.AddForce(Strikeforce.getForce());
+
     }
 
     public void ConfirmButton()
     {
         confirmButtonPressed = true;
+        confirmButton.SetActive(false); 
+        arrow.SetActive(true);
     }
 
     /* IEnumerator ResetStrikerPos()
