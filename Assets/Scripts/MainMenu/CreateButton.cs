@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CreateButton: MonoBehaviour
 {
     // Start is called before the first frame update
 
+
     public static void listener(){
-        Debug.Log("You have created a new server");
         
+        GameObject gm = GameObject.Find("roomName");
+        TMP_InputField text = gm.GetComponent<TMP_InputField>(); 
+        NetworkManager.onClickCreateRoom(text.text);
+
+        Debug.Log(text.text);
     }
 }

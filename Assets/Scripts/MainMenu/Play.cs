@@ -7,7 +7,8 @@ public class Play : MonoBehaviour
 {
     Button button;
     public GameObject CreateorJoin;
-
+    public delegate void OnPlayClicked();
+    public static OnPlayClicked onPlayClicked;
     public GameObject room;
     // Start is called before the first frame update
     void Start()
@@ -25,6 +26,8 @@ public class Play : MonoBehaviour
         
 
         CreateorJoin.SetActive(true);            
+        NetworkManager.playButtonClicked();
+        onPlayClicked?.Invoke();
 
     }
 
