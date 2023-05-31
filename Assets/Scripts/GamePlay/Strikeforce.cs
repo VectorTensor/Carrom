@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+/*using UnityEngine;
 
 public class Strikeforce : MonoBehaviour
 {
@@ -11,8 +9,5 @@ public class Strikeforce : MonoBehaviour
     public static Vector3 getForce(){
 
         return magnitude*direction;
-
     }
-
-    // Start is called before the first frame update
-}
+}*/
