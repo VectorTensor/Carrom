@@ -1,21 +1,25 @@
-using System.Collections;
 using UnityEngine;
 
 public class Striker_R : MonoBehaviour
 {
+    public float y;
+    public float strikerForce;
+
     Rigidbody rb;
-    bool confirmButtonPressed = false;
-   [SerializeField] GameObject confirmButton;
-    [SerializeField]GameObject arrow ;
+    bool confirmPosition = false;
+
+    [SerializeField] GameObject confirmButton;
+    GameObject arrow ;
+
     private void Start()
     {
-        arrow.SetActive(false);
+        arrow = gameObject.transform.GetChild(0).gameObject;
         rb = GetComponent<Rigidbody>();
     }
-
+    
     void FixedUpdate()
     {
-        if (!confirmButtonPressed) //if button not clicked
+        if (!confirmPosition) //if button not clicked
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -28,31 +32,36 @@ public class Striker_R : MonoBehaviour
                     rb.MovePosition(newPostion);
                 }
             }
-
         }
-        
 
+        //Set direction
+        y = arrow.transform.localRotation.eulerAngles.y;
+        transform.localEulerAngles = new Vector3(0, y, 0);
+
+        //Add force
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Added Force");
+            rb.AddRelativeForce(Vector3.forward * strikerForce * ForceSlider.currentValue);
+        }
     }
 
-    void OnEnable(){
-        
+    /*void OnEnable()
+    {
         ForceSlider.onforceset += Attack;
-
     }
 
-    void Attack(){
-
-     Debug.Log("Add force ");
-    Rigidbody rb = GetComponent<Rigidbody>();
-    rb.AddForce(Strikeforce.getForce());
-
-    }
+    void Attack()
+    {
+        Debug.Log("Add force ");
+        Rigidbody rb = GetComponent<Rigidbody>();
+    }*/
 
     public void ConfirmButton()
     {
-        confirmButtonPressed = true;
-        confirmButton.SetActive(false); 
-        arrow.SetActive(true);
+        confirmPosition = true;
+        confirmButton.SetActive(false);
+        arrow.SetActive(!arrow.activeSelf);
     }
 
     /* IEnumerator ResetStrikerPos()
