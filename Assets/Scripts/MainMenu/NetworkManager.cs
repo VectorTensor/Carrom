@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.UI;
+using TMPro;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField]
@@ -12,13 +13,25 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void Start()
     {
         
+        GameObject button = GameObject.Find("Play");
+        button.GetComponent<Button>().interactable = true;
         
+        PhotonNetwork.ConnectUsingSettings();
     }
 
+    public override void OnConnectedToMaster()
+    {
+        GameObject button = GameObject.Find("Play");
+        button.GetComponent<Button>().interactable = true;
+        
+        
+
+    }
 
     public static void playButtonClicked(){
 
-        PhotonNetwork.ConnectUsingSettings();
+        PhotonNetwork.NickName = GameObject.Find("PlayerName").GetComponent<TMP_InputField>().text;
+        Debug.Log(PhotonNetwork.NickName);
         Debug.Log("logged");
     }
 
