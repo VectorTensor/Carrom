@@ -17,6 +17,11 @@ public class ForceDirection : MonoBehaviour
         MouseY = 2
     }
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     void Update()
     {
         Rot += Input.GetAxis("Mouse X") * sensitivity;
