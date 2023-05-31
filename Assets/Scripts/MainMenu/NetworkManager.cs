@@ -31,8 +31,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public static void playButtonClicked(){
 
         PhotonNetwork.NickName = GameObject.Find("PlayerName").GetComponent<TMP_InputField>().text;
-        Debug.Log(PhotonNetwork.NickName);
-        Debug.Log("logged");
+        //Debug.Log(PhotonNetwork.NickName);
+        //Debug.Log("logged");
     }
 
     public static void onClickCreateRoom(string name){
