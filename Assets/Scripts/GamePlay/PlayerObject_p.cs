@@ -7,10 +7,10 @@ public class PlayerObject_p : MonoBehaviour
 {
     GameObject parent;
     List<Vector3> PositionList = new List<Vector3>(){
-        new Vector3(0f,0,-1.84f),
-        new Vector3(0,0,1.67f),
-        new Vector3(-2.01f,0,-0.17f),
-        new Vector3(1.56f,0,-0.17f)
+        new Vector3(0f,0.1f,-1.84f),
+        new Vector3(0,0.1f,1.67f),
+        new Vector3(-2.01f,0.1f,-0.17f),
+        new Vector3(1.56f,0.1f,-0.17f)
     };
     // Start is called before the first frame update
     void Start()
@@ -21,6 +21,8 @@ public class PlayerObject_p : MonoBehaviour
         gameObject.transform.parent = parent.transform;
 
         gameObject.transform.localPosition = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1];
+
+
         
     }
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using Photon.Pun;
 public class UIManager : MonoBehaviour
 {
     public float y; 
@@ -14,7 +14,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        selfTrans = GameObject.Find("Striker");
+        // Find which player are you and find the respective slider
+        selfTrans = GameObject.Find("Striker" + PhotonNetwork.LocalPlayer.ActorNumber);
         strikerRb = selfTrans.GetComponent<Rigidbody>();
         arrow = selfTrans.transform.GetChild(0).gameObject;
     }

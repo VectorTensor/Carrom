@@ -10,7 +10,8 @@ public class PlayerSpwan : MonoBehaviour
     void Start()
     {
         
-        PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
+        GameObject gm = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
+        gm.name = "Striker" + PhotonNetwork.LocalPlayer.ActorNumber; 
     }
 
     // Update is called once per frame
