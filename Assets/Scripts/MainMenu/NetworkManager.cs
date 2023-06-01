@@ -65,6 +65,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("Gameplay");
+
     }
 
     // Update is called once per frame
