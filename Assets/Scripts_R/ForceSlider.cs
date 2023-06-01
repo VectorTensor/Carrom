@@ -9,8 +9,6 @@ public class ForceSlider : MonoBehaviour
     float speed = 2f;
 
     bool isIncreasing = true;
-    bool isRunning = true;
-    bool animate = true;
     
     IEnumerator coroutine;
 
@@ -18,39 +16,33 @@ public class ForceSlider : MonoBehaviour
 
     public static float currentValue;
 
-    //public delegate void onForceSet();
-    //public static onForceSet onforceset;
+    public delegate void onForceSet();
+    public static onForceSet onforceset;
 
-    private void Start()
+    public float count;
+
+    void OnEnable()
     {
-        coroutine = AnimateForceBar();
+        if(coroutine == null)
+        {
+            coroutine = AnimateForceBar();
+        }
+
         StartCoroutine(coroutine);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            isRunning = !isRunning;
-
-            if(isRunning)
-            {
-                StartCoroutine(coroutine);
-            }
-            else
-            {
-                StopCoroutine(coroutine);
-            }
-
             currentValue = forceSlider.value;
-            //onforceset?.Invoke();
-            Debug.Log("Current Value = " + currentValue);
+            onforceset?.Invoke();
         }
     }
 
     private IEnumerator AnimateForceBar()
     {
-        while(animate)
+        while (true)
         {
             if (isIncreasing)
             {
