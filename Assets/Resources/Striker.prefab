@@ -38,7 +38,7 @@ Transform:
   m_Children:
   - {fileID: 7904306626635065198}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7685008010004035714
 MeshFilter:
@@ -270,7 +270,7 @@ MonoBehaviour:
   sensitivity: 9
   minimum: -30
   maximum: 30
-  force_slider: {fileID: 0}
+  force_slider: {fileID: 1182370630343272224, guid: 26410ba18e5d46f419e887cbb9b58ada, type: 3}
 --- !u!1001 &4037661500464663896
 PrefabInstance:
   m_ObjectHideFlags: 0
