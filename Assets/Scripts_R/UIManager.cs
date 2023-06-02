@@ -5,19 +5,26 @@ public class UIManager : MonoBehaviour
 {
     public float y; 
     
-    GameObject arrow, selfTrans;
+    GameObject striker, arrow;
     Rigidbody strikerRb;
 
     public Slider positionSlider;
     public Slider forceSlider;
     public static bool hasStriked = false;
 
-    private void Start()
+    void Start()
+    {
+        PlayerSpwan.StrikerInstantiated += OnStrikerInstantiated;
+    }
+
+    void OnStrikerInstantiated()
     {
         // Find which player are you and find the respective slider
-        selfTrans = GameObject.Find("Striker" + PhotonNetwork.LocalPlayer.ActorNumber);
-        strikerRb = selfTrans.GetComponent<Rigidbody>();
-        arrow = selfTrans.transform.GetChild(0).gameObject;
+        // Access the "striker" GameObject and perform necessary actions
+        striker = GameObject.Find("Striker" + PhotonNetwork.LocalPlayer.ActorNumber);
+        // ...
+        strikerRb = striker.GetComponent<Rigidbody>();
+        arrow = striker.transform.GetChild(0).gameObject;
     }
 
     void Update()
@@ -37,12 +44,12 @@ public class UIManager : MonoBehaviour
         //Set striker postion with slider
         if (positionSlider.gameObject.activeSelf == true )
         {
-            selfTrans.transform.position = new Vector3(positionSlider.value, selfTrans.transform.position.y, selfTrans.transform.position.z);
+            striker.transform.position = new Vector3(positionSlider.value, striker.transform.position.y, striker.transform.position.z);
         }
 
         //Set direction //Correction Needed
         y = arrow.transform.localRotation.eulerAngles.y; //30
-        selfTrans.transform.localRotation =  Quaternion.Euler(new Vector3(0, y, 0));  //30
+        striker.transform.localRotation =  Quaternion.Euler(new Vector3(0, y, 0));  //30
     }
 
     public void ConfirmButton()
@@ -55,7 +62,7 @@ public class UIManager : MonoBehaviour
     public void ResetStrikerPosition()
     {
         Debug.Log("Reset Striker Position");
-        selfTrans.transform.position = new Vector3(0, 0.1f, -1.75f);
+        striker.transform.position = new Vector3(0, 0.1f, -1.75f);
         positionSlider.gameObject.SetActive(true);
         hasStriked = false;
     }

@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System;
 
 public class PlayerSpwan : MonoBehaviour
 {
     [SerializeField] GameObject playerPrefab;
-    // Start is called before the first frame update
+
+    public static event Action StrikerInstantiated;
+
     void Start()
     {
-        
         GameObject gm = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
-        gm.name = "Striker" + PhotonNetwork.LocalPlayer.ActorNumber; 
+        gm.name = "Striker" + PhotonNetwork.LocalPlayer.ActorNumber;
+
+        StrikerInstantiated?.Invoke();
     }
 
-    // Update is called once per frame
-    void Update()
+    void SpawnStriker() //Spawn striker at first
     {
-        
+
     }
 }
