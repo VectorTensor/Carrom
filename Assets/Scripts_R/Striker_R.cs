@@ -20,16 +20,13 @@ public class Striker_R : MonoBehaviour
     {
         //rb.AddForce(direction * force * forceMultipler);
         PhotonView photonView = GetComponent<PhotonView>();
-        Debug.Log("attack");
         if (photonView.IsMine){
 
-        Debug.Log("is mine");
         Vector3 force = Vector3.forward * strikerForce * ForceSlider.currentValue;
         rb.AddRelativeForce(force);
         UIManager.hasStriked = true;
         magnitude = rb.velocity.magnitude;
         endAction?.Invoke();
-        Debug.Log("Attacked");
         }
     }
 
