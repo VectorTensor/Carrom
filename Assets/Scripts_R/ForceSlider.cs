@@ -35,6 +35,7 @@ public class ForceSlider : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            Debug.Log("key down");
             currentValue = forceSlider.value;
             onforceset?.Invoke();
         }

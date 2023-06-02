@@ -21,6 +21,7 @@ public class TurnHandle : MonoBehaviour
     }
     [PunRPC]
     void messageEveryone(string message){
+        Debug.Log("messaged called");
         Debug.Log(message);
 
     }
@@ -33,6 +34,7 @@ public class TurnHandle : MonoBehaviour
 
     [PunRPC]
     void sendTurn(int turn){
+        Debug.Log("turn" + turn);
         this.turn = turn;
     }
     [PunRPC]
@@ -40,11 +42,15 @@ public class TurnHandle : MonoBehaviour
         // How next turn is calculated
         turn = turn  % total_numbers_of_players+1; 
 
-        
+
+         Debug.Log("nextTurn function called");
         PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("messageEveryone",RpcTarget.All,"Player turn "+ turn );
+//        photonView.RPC("messageEveryone",RpcTarget.All,"Player turn "+ turn );
+            photonView.RPC("sendTurn",RpcTarget.Others, turn );
+
+
+
         
-        photonView.RPC("sendTurn",RpcTarget.Others, turn );
 
 
     }
@@ -60,15 +66,7 @@ public class TurnHandle : MonoBehaviour
     {
         //&& turn == int.Parse(PhotonNetwork.LocalPlayer.ActorNumber)
 
-        if ( turn == PhotonNetwork.LocalPlayer.ActorNumber ) {
-
-            UIslider.SetActive(true);
-        }
-
-        else{
-
-            UIslider.SetActive(false);
-        }
+            UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
         
     }
 }

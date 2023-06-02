@@ -12,6 +12,10 @@ public class PlayerObject_p : MonoBehaviour
         new Vector3(-2.01f,0.1f,-0.17f),
         new Vector3(1.56f,0.1f,-0.17f)
     };
+
+
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +33,5 @@ public class PlayerObject_p : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

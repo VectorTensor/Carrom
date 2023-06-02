@@ -26,7 +26,7 @@ public class Play : MonoBehaviour
         
 
         CreateorJoin.SetActive(true);            
-        NetworkManager.playButtonClicked();
+        NetworkManager.GetInstance().playButtonClicked();
         onPlayClicked?.Invoke();
 
     }
