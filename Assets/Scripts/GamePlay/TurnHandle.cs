@@ -5,6 +5,7 @@ using Photon.Pun;
 
 public class TurnHandle : MonoBehaviour
 {
+    [SerializeField] GameObject UIslider;
     private int turn; 
     private int total_numbers_of_players =2 ;
     // Start is called before the first frame update
@@ -22,6 +23,12 @@ public class TurnHandle : MonoBehaviour
     void messageEveryone(string message){
         Debug.Log(message);
 
+    }
+    void OnEnable(){
+        Striker_R.endAction += actionDone;
+    }
+    void OnDisable(){
+        Striker_R.endAction -= actionDone;
     }
 
     [PunRPC]
@@ -42,15 +49,25 @@ public class TurnHandle : MonoBehaviour
 
     }
 
+    void actionDone(){
+
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("nextTurn",RpcTarget.MasterClient);
+    }
+
     // Update is called once per frame
     void Update()
     {
         //&& turn == int.Parse(PhotonNetwork.LocalPlayer.ActorNumber)
 
-        if (Input.GetMouseButtonDown(0) && turn == PhotonNetwork.LocalPlayer.ActorNumber ) {
+        if ( turn == PhotonNetwork.LocalPlayer.ActorNumber ) {
 
-        PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("nextTurn",RpcTarget.MasterClient);
+            UIslider.SetActive(true);
+        }
+
+        else{
+
+            UIslider.SetActive(false);
         }
         
     }

@@ -1233,6 +1233,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 847079235}
+  - component: {fileID: 847079236}
   m_Layer: 0
   m_Name: Firebase
   m_TagString: Untagged
@@ -1255,6 +1256,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &847079236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847079234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb1f4544ee348a42b0b5844f01882e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &939217764
 GameObject:
   m_ObjectHideFlags: 0
@@ -2797,7 +2810,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4e61ce8195b3de4082e9e59c910f328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 1248885090800645301, guid: d980ea0b0a7811342b9bc7bd77e3ca84, type: 3}
 --- !u!1 &1614094363
 GameObject:
   m_ObjectHideFlags: 0

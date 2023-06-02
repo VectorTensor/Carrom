@@ -13,7 +13,7 @@ public class Play : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        //gameObject.SetActive(FirebaseSetup.fd.isPlayable);
         room.SetActive(false);
         CreateorJoin.SetActive(false);
         button = GetComponent<Button>();

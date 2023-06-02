@@ -6,6 +6,9 @@ public class Striker_R : MonoBehaviour
     public float magnitude;
     Rigidbody rb;
     Vector3 startPos;
+    public delegate void  EndAction();
+
+    public static EndAction endAction;
 
     void Start()
     {
@@ -20,6 +23,7 @@ public class Striker_R : MonoBehaviour
         rb.AddRelativeForce(force);
         UIManager.hasStriked = true;
         magnitude = rb.velocity.magnitude;
+        endAction?.Invoke();
     }
 
     void OnEnable()

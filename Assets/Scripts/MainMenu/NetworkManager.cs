@@ -14,7 +14,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         
         GameObject button = GameObject.Find("Play");
-        button.GetComponent<Button>().interactable = true;
+        button.GetComponent<Button>().interactable = false;
         
         PhotonNetwork.ConnectUsingSettings();
     }
