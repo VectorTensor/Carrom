@@ -9,7 +9,7 @@ public class JoinButton : MonoBehaviour
         GameObject gm = GameObject.Find("roomName");
         TMP_InputField text = gm.GetComponent<TMP_InputField>(); 
 
-        NetworkManager.onClickJoinRoom(text.text);
+        NetworkManager.GetInstance().onClickJoinRoom(text.text);
 
         Debug.Log(text.text);
         

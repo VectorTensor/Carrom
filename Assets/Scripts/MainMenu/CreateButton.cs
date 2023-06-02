@@ -12,7 +12,7 @@ public class CreateButton: MonoBehaviour
         
         GameObject gm = GameObject.Find("roomName");
         TMP_InputField text = gm.GetComponent<TMP_InputField>(); 
-        NetworkManager.onClickCreateRoom(text.text);
+        NetworkManager.GetInstance().onClickCreateRoom(text.text);
 
         Debug.Log(text.text);
     }

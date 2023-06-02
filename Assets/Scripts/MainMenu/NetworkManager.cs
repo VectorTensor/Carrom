@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,21 @@ using UnityEngine.UI;
 using TMPro;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    public static NetworkManager instance;
+    private int numberOfPlayers;
     [SerializeField]
-    static int no_of_players = 2;
     // Start is called before the first frame update
+
+    void Awake(){
+        if(instance == null){
+            instance = this;
+        }
+    }
+
+    public static NetworkManager GetInstance(){
+        return instance;
+    }
+
     void Start()
     {
         
@@ -28,17 +41,17 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     }
 
-    public static void playButtonClicked(){
+    public void playButtonClicked(){
 
         PhotonNetwork.NickName = GameObject.Find("PlayerName").GetComponent<TMP_InputField>().text;
         //Debug.Log(PhotonNetwork.NickName);
         //Debug.Log("logged");
     }
 
-    public static void onClickCreateRoom(string name){
+    public void onClickCreateRoom(string name){
 
         RoomOptions options = new RoomOptions();
-        options.MaxPlayers = no_of_players;
+        options.MaxPlayers = numberOfPlayers;
         PhotonNetwork.JoinOrCreateRoom(name,options, TypedLobby.Default);
 
     }
@@ -55,7 +68,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     }
 
-    public static void onClickJoinRoom(string name){
+    public void onClickJoinRoom(string name){
 
         PhotonNetwork.JoinRoom(name);
 
