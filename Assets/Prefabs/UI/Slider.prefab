@@ -104,7 +104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceSlider: {fileID: 1357552275165581770}
-  count: 0
 --- !u!1 &2863425089331213064
 GameObject:
   m_ObjectHideFlags: 0

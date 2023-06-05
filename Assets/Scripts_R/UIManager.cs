@@ -1,16 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System.Collections;
+
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance;
+
     public float y; 
     
     GameObject striker, arrow;
-    Rigidbody strikerRb;
 
     public Slider positionSlider;
     public Slider forceSlider;
     public static bool hasStriked = false;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -19,29 +27,14 @@ public class UIManager : MonoBehaviour
 
     void OnStrikerInstantiated()
     {
-        // Find which player are you and find the respective slider
-        // Access the "striker" GameObject and perform necessary actions
+        // Find which player it is and find the respective slider
+        // Access the "striker" GameObject
         striker = GameObject.Find("Striker" + PhotonNetwork.LocalPlayer.ActorNumber);
-        // ...
-        strikerRb = striker.GetComponent<Rigidbody>();
         arrow = striker.transform.GetChild(0).gameObject;
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            forceSlider.gameObject.SetActive(false);
-            Debug.Log("Force bar = " + forceSlider.gameObject.activeSelf);
-        }
-
-        //Reset striker position
-        if (strikerRb.velocity.magnitude == 0.0f && hasStriked)
-        {
-            ResetStrikerPosition();
-        }
-
-        //Set striker postion with slider
         if (positionSlider.gameObject.activeSelf == true )
         {
             striker.transform.position = new Vector3(positionSlider.value, striker.transform.position.y, striker.transform.position.z);
@@ -54,16 +47,19 @@ public class UIManager : MonoBehaviour
 
     public void ConfirmButton()
     {
-        positionSlider.gameObject.SetActive(false);
+        //positionSlider.gameObject.SetActive(false);
         arrow.SetActive(!arrow.activeSelf);
         forceSlider.gameObject.SetActive(true);
     }
 
-    public void ResetStrikerPosition()
+    public IEnumerator DisableStriker()
     {
-        Debug.Log("Reset Striker Position");
-        striker.transform.position = new Vector3(0, 0.1f, -1.75f);
-        positionSlider.gameObject.SetActive(true);
-        hasStriked = false;
+        Debug.Log("Going to disable now" + TurnHandle.instance.turn); //2
+        Debug.Log("Going to disable now" + PhotonNetwork.LocalPlayer.ActorNumber); //1
+        bool value = TurnHandle.instance.turn == PhotonNetwork.LocalPlayer.ActorNumber;
+        Debug.Log("Going to disable" + value);
+        
+        striker.SetActive(TurnHandle.instance.turn == PhotonNetwork.LocalPlayer.ActorNumber);
+        yield return null;
     }
 }

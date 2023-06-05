@@ -24,10 +24,8 @@ public class PlayerObject_p : MonoBehaviour
 
         gameObject.transform.parent = parent.transform;
 
+        //Set striker position
         gameObject.transform.localPosition = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1];
-
-
-        
     }
 
     // Update is called once per frame

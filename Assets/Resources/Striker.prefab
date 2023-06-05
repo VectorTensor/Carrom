@@ -98,7 +98,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488665913138625815}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -115,8 +115,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 2
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!64 &4103169878559530687
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -124,7 +124,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488665913138625815}
-  m_Material: {fileID: 13400000, guid: ad4e9c94a900d484e81120ad2c3594ca, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -151,8 +151,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1997434d50b61994eaa43a9d62a969e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strikerForce: 1000
-  magnitude: 0
+  y: -0.5
+  stikerTransform: {fileID: 0}
+  strikerPosition: {x: 0, y: 0, z: 0}
+  strikerForce: 500
+  direction: {x: 0, y: 0, z: 0}
+  mousePos1: {x: 0, y: 0, z: 0}
+  mousePos2: {x: 0, y: 0, z: 0}
+  lineRenderer: {fileID: 8758690137078515562, guid: 01d1eae7e0fad964a9bd9f8b64f11c9a, type: 3}
 --- !u!114 &-3571605392172208415
 MonoBehaviour:
   m_ObjectHideFlags: 0

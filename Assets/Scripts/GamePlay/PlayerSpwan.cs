@@ -7,6 +7,7 @@ public class PlayerSpwan : MonoBehaviour
     [SerializeField] GameObject playerPrefab;
 
     public static event Action StrikerInstantiated;
+    public static event Action Striker;
 
     void Start()
     {
@@ -14,6 +15,7 @@ public class PlayerSpwan : MonoBehaviour
         gm.name = "Striker" + PhotonNetwork.LocalPlayer.ActorNumber;
 
         StrikerInstantiated?.Invoke();
+        Striker?.Invoke();
     }
 
     void SpawnStriker() //Spawn striker at first
