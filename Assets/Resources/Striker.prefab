@@ -237,6 +237,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7904306626635065198}
   - component: {fileID: 3680423322354053735}
+  - component: {fileID: 7978394329379180271}
   m_Layer: 0
   m_Name: reference
   m_TagString: Untagged
@@ -277,6 +278,19 @@ MonoBehaviour:
   minimum: -30
   maximum: 30
   force_slider: {fileID: 1182370630343272224, guid: 26410ba18e5d46f419e887cbb9b58ada, type: 3}
+--- !u!114 &7978394329379180271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4323877380019492825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d1f64eac478ef440b6566d585bb3c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 0}
 --- !u!1001 &4037661500464663896
 PrefabInstance:
   m_ObjectHideFlags: 0

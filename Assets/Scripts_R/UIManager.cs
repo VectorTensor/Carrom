@@ -22,9 +22,12 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        PlayerSpwan.StrikerInstantiated += OnStrikerInstantiated;
     }
 
+    void OnEnable(){
+
+        PlayerSpwan.StrikerInstantiated += OnStrikerInstantiated;
+    }
     void OnStrikerInstantiated()
     {
         // Find which player it is and find the respective slider

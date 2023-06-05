@@ -1,87 +1,84 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
 public class TurnHandle : MonoBehaviour
 {
-    public static TurnHandle instance;
+    [SerializeField] GameObject UIslider;
+    private int turn; 
+    private int total_numbers_of_players =2 ;
 
-    [SerializeField] GameObject UIslider; //local
-    GameObject _striker; //local
-
-    public int turn; 
-    int total_numbers_of_players =2 ;
-
-    private void Awake()
-    {
-        instance = this;
-    }
-
+    public GameObject gm ;
+    // Start is called before the first frame update
     void Start()
     {
-        total_numbers_of_players = 2;
+        
+        total_numbers_of_players = gm.GetComponent<GameplayBegin>().number_of_players;
         turn = 1;
         //PhotonView photonView = PhotonView.Get(this);
         //photonView.RPC("helloEveryone",RpcTarget.All,"hello mate");
-        Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
+        Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber) ;
+       // UIslider.SetActive(false);
+        
+    }
+    void onPlayerInstantiation(){
 
-        //PlayerSpwan.Striker += OnStrike;
+        UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+    }
+    [PunRPC]
+    void messageEveryone(string message){
+        Debug.Log("messaged called");
+        Debug.Log(message);
+
+    }
+    void OnEnable(){
+        Striker_R.endAction += actionDone;
+        PlayerSpwan.StrikerInstantiated += onPlayerInstantiation;
+    }
+    void OnDisable(){
+        Striker_R.endAction -= actionDone;
+        PlayerSpwan.StrikerInstantiated -= onPlayerInstantiation;
     }
 
-    public void OnStrike()
-    {
-        _striker = GameObject.Find("Striker" + PhotonNetwork.LocalPlayer.ActorNumber);
+    [PunRPC]
+    void sendTurn(int turn){
+       // Debug.Log("turn" + turn);
+        this.turn = turn;
+        UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+    }
+    [PunRPC]
+    void nextTurn(){
+        // How next turn is calculated
+        turn = turn  % total_numbers_of_players+1; 
+
+
+         Debug.Log("nextTurn function called");
+        PhotonView photonView = PhotonView.Get(this);
+//        photonView.RPC("messageEveryone",RpcTarget.All,"Player turn "+ turn );
+        photonView.RPC("sendTurn",RpcTarget.Others, turn );
+
+
+
+        
+
+
     }
 
+    void actionDone(){
+
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("nextTurn",RpcTarget.MasterClient);
+    }
+
+    
+
+    // Update is called once per frame
     void Update()
     {
         //&& turn == int.Parse(PhotonNetwork.LocalPlayer.ActorNumber)
-        UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
-        //_striker.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+
+        //`    UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+        
     }
-
-    
-    void OnEnable()
-    {
-        Striker_R.endAction += actionDone;
-    }
-    void OnDisable()
-    {
-        Striker_R.endAction -= actionDone;
-    }
-
-    void actionDone()
-    {
-        PhotonView photonView = PhotonView.Get(this);
-        photonView.RPC("nextTurn",RpcTarget.All);
-    }
-
-    [PunRPC]
-    void nextTurn()
-    {
-        //UIManager.hasStriked = false;
-
-        // How next turn is calculated
-        turn = turn  % total_numbers_of_players+1;
-
-        Debug.Log("nextTurn function called");
-        PhotonView photonView = PhotonView.Get(this);
-        //photonView.RPC("messageEveryone",RpcTarget.All,"Player turn "+ turn );
-        photonView.RPC("sendTurn", RpcTarget.Others, turn);
-    }
-
-    [PunRPC]
-    void sendTurn(int turn)
-    {
-        Debug.Log("turn" + turn);
-        this.turn = turn;
-    }
-
-    /*[PunRPC]
-    void messageEveryone(string message)
-    {
-        Debug.Log("messaged called");
-        Debug.Log(message);
-    }*/
-
-    
 }
