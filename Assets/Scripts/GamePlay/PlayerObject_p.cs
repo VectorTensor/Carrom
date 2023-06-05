@@ -36,7 +36,7 @@ public class PlayerObject_p : MonoBehaviour
     void Start()
     {
 
-        parent = GameObject.Find("GameManager");
+        parent = GameObject.FindWithTag("GameManager");
 
         gameObject.transform.parent = parent.transform;
 
