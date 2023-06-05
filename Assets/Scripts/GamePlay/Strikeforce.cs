@@ -1,4 +1,4 @@
-/*using UnityEngine;
+using UnityEngine;
 
 public class Strikeforce : MonoBehaviour
 {
@@ -10,4 +10,4 @@ public class Strikeforce : MonoBehaviour
 
         return magnitude*direction;
     }
-}*/
+}

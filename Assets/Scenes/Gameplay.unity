@@ -3514,7 +3514,7 @@ GameObject:
   - component: {fileID: 1817867308}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3560,6 +3560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UIslider: {fileID: 1729290709}
+  forceSlider: {fileID: 2044293077}
 --- !u!114 &1817867309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4027,7 +4028,6 @@ MonoBehaviour:
   sensitivity: 9
   minimum: -30
   maximum: 30
-  force_slider: {fileID: 0}
 --- !u!1001 &2044293075
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4039,14 +4039,6 @@ PrefabInstance:
     - target: {fileID: 1182370630343272224, guid: 26410ba18e5d46f419e887cbb9b58ada, type: 3}
       propertyPath: m_Name
       value: Slider
-      objectReference: {fileID: 0}
-    - target: {fileID: 1182370630343272224, guid: 26410ba18e5d46f419e887cbb9b58ada, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5936662810008220818, guid: 26410ba18e5d46f419e887cbb9b58ada, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6878183067903259547, guid: 26410ba18e5d46f419e887cbb9b58ada, type: 3}
       propertyPath: m_Pivot.x
@@ -4142,12 +4134,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6878183067903259547, guid: 26410ba18e5d46f419e887cbb9b58ada, type: 3}
   m_PrefabInstance: {fileID: 2044293075}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2044293077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1182370630343272224, guid: 26410ba18e5d46f419e887cbb9b58ada, type: 3}
+  m_PrefabInstance: {fileID: 2044293075}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2044293078 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1357552275165581770, guid: 26410ba18e5d46f419e887cbb9b58ada, type: 3}
   m_PrefabInstance: {fileID: 2044293075}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2044293077}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}

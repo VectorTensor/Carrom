@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using System;
 public class ForceDirection : MonoBehaviour
 {
     public float childY;
@@ -8,7 +8,7 @@ public class ForceDirection : MonoBehaviour
     public float maximum = 45.0f;
     private float Rot = 0;
 
-    [SerializeField] GameObject force_slider;
+    public static event Action directionGiven;
 
     public enum RotationAxes
     {
@@ -32,8 +32,10 @@ public class ForceDirection : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            Vector3 x = gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).position - gameObject.transform.GetChild(0).gameObject.transform.GetChild(1).position; 
+            Strikeforce.direction =  x.normalized;
+            directionGiven?.Invoke();
             gameObject.SetActive(false);
-            force_slider.SetActive(true);
         }
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System;
 public class UIManager : MonoBehaviour
 {
     public float y; 
@@ -8,9 +9,11 @@ public class UIManager : MonoBehaviour
     GameObject striker, arrow;
     Rigidbody strikerRb;
 
+    public static event Action resetStriker;
     public Slider positionSlider;
     public Slider forceSlider;
     public static bool hasStriked = false;
+
 
     void Start()
     {
@@ -29,11 +32,11 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            forceSlider.gameObject.SetActive(false);
-            Debug.Log("Force bar = " + forceSlider.gameObject.activeSelf);
-        }
+        //if(Input.GetKeyDown(KeyCode.Space))
+        //{
+            //forceSlider.gameObject.SetActive(false);
+            //Debug.Log("Force bar = " + forceSlider.gameObject.activeSelf);
+        //}
 
         //Reset striker position
         if (strikerRb.velocity.magnitude == 0.0f && hasStriked)
@@ -51,19 +54,26 @@ public class UIManager : MonoBehaviour
         y = arrow.transform.localRotation.eulerAngles.y; //30
         striker.transform.localRotation =  Quaternion.Euler(new Vector3(0, y, 0));  //30
     }
+    void OnEnable(){
+        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+    }
 
     public void ConfirmButton()
     {
+       // gameObject.transform.GetChild(0).gameObject.SetActive(false);
         positionSlider.gameObject.SetActive(false);
+
         arrow.SetActive(!arrow.activeSelf);
-        forceSlider.gameObject.SetActive(true);
+        forceSlider.gameObject.SetActive(false);
     }
 
     public void ResetStrikerPosition()
     {
         Debug.Log("Reset Striker Position");
-        striker.transform.position = new Vector3(0, 0.1f, -1.75f);
+       // striker.transform.position = new Vector3(0, 0.1f, -1.75f);
         positionSlider.gameObject.SetActive(true);
+        resetStriker?.Invoke();
+        //gameObject.transform.GetChild(0).gameObject.SetActive(false);
         hasStriked = false;
     }
 }

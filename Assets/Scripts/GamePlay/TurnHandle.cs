@@ -6,6 +6,9 @@ using Photon.Pun;
 public class TurnHandle : MonoBehaviour
 {
     [SerializeField] GameObject UIslider;
+
+    [SerializeField] GameObject forceSlider;
+    
     private int turn; 
     private int total_numbers_of_players =2 ;
     // Start is called before the first frame update
@@ -19,6 +22,13 @@ public class TurnHandle : MonoBehaviour
         Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber) ;
         
     }
+
+
+    void activateSlider(){
+        forceSlider.SetActive(true);
+    }
+
+
     [PunRPC]
     void messageEveryone(string message){
         Debug.Log("messaged called");
@@ -27,9 +37,11 @@ public class TurnHandle : MonoBehaviour
     }
     void OnEnable(){
         Striker_R.endAction += actionDone;
+        ForceDirection.directionGiven += activateSlider; 
     }
     void OnDisable(){
         Striker_R.endAction -= actionDone;
+        ForceDirection.directionGiven -= activateSlider; 
     }
 
     [PunRPC]

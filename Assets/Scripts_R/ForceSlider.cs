@@ -5,8 +5,10 @@ using UnityEngine.UI;
 public class ForceSlider : MonoBehaviour
 {
     float minValue = 0f;
-    float maxValue = 1f;
-    float speed = 2f;
+    float maxValue = 200f;
+    float speed = 50f;
+     
+    int multipler = 100;
 
     bool isIncreasing = true;
     
@@ -20,6 +22,7 @@ public class ForceSlider : MonoBehaviour
     public static onForceSet onforceset;
 
     public float count;
+
 
     void OnEnable()
     {
@@ -35,8 +38,12 @@ public class ForceSlider : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            currentValue = forceSlider.value;
+            
+            Debug.Log("Force added");
+            currentValue = forceSlider.value * multipler; 
+            Strikeforce.magnitude = currentValue;
             onforceset?.Invoke();
+            forceSlider.gameObject.SetActive(false);
         }
     }
 
