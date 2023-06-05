@@ -14,7 +14,23 @@ public class PlayerObject_p : MonoBehaviour
     };
 
 
+// Create tuple list 
+// just like local position add to a property 
+// The property is the variable min and max that is in the force direction script of reference gameObject
 
+    List<Vector2> InitialRotationList = new List<Vector2>(){
+        new Vector2(-30,30),
+        new Vector2(-120,120), 
+        new Vector2(240,300),
+        new Vector2(60,120), 
+    };
+
+    List<Vector3> RotationList = new List<Vector3>(){
+        new Vector3(0,0,0),
+        new Vector3(0,180,0),
+        new Vector3(0,270,0),
+        new Vector3(0,90,0)
+    };
     
     // Start is called before the first frame update
     void Start()
@@ -25,6 +41,17 @@ public class PlayerObject_p : MonoBehaviour
         gameObject.transform.parent = parent.transform;
 
         gameObject.transform.localPosition = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1];
+
+        ForceDirection reference = GetComponentInChildren<ForceDirection>();
+
+        reference.minimum = InitialRotationList[PhotonNetwork.LocalPlayer.ActorNumber -1].x;
+        
+        reference.maximum= InitialRotationList[PhotonNetwork.LocalPlayer.ActorNumber -1].y;
+
+        
+        transform.Rotate (RotationList[PhotonNetwork.LocalPlayer.ActorNumber -1]);
+
+
 
 
         
