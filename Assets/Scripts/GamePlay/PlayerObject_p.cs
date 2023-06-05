@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -44,9 +43,8 @@ public class PlayerObject_p : MonoBehaviour
 
         ForceDirection reference = GetComponentInChildren<ForceDirection>();
 
-        reference.minimum = InitialRotationList[PhotonNetwork.LocalPlayer.ActorNumber -1].x;
-        
-        reference.maximum= InitialRotationList[PhotonNetwork.LocalPlayer.ActorNumber -1].y;
+        //reference.minimum = InitialRotationList[PhotonNetwork.LocalPlayer.ActorNumber -1].x;
+        //reference.maximum= InitialRotationList[PhotonNetwork.LocalPlayer.ActorNumber -1].y;
 
         
         transform.Rotate (RotationList[PhotonNetwork.LocalPlayer.ActorNumber -1]);

@@ -13,7 +13,6 @@ public class TurnHandle : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
         total_numbers_of_players = gm.GetComponent<GameplayBegin>().number_of_players;
         turn = 1;
         //PhotonView photonView = PhotonView.Get(this);

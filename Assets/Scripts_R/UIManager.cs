@@ -57,12 +57,12 @@ public class UIManager : MonoBehaviour
 
     public IEnumerator DisableStriker()
     {
-        Debug.Log("Going to disable now" + TurnHandle.instance.turn); //2
+        /*Debug.Log("Going to disable now" + TurnHandle.instance.turn); //2
         Debug.Log("Going to disable now" + PhotonNetwork.LocalPlayer.ActorNumber); //1
         bool value = TurnHandle.instance.turn == PhotonNetwork.LocalPlayer.ActorNumber;
-        Debug.Log("Going to disable" + value);
         
-        striker.SetActive(TurnHandle.instance.turn == PhotonNetwork.LocalPlayer.ActorNumber);
+        striker.SetActive(TurnHandle.instance.turn == PhotonNetwork.LocalPlayer.ActorNumber);*/
+        Debug.Log("Going to disable");
         yield return null;
     }
 }
