@@ -8,7 +8,7 @@ public class ForceSlider : MonoBehaviour
     float maxValue = 200f;
     float speed = 50f;
      
-    int multipler = 100;
+    int multipler = 10;
 
     bool isIncreasing = true;
     
