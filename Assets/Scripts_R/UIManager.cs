@@ -20,11 +20,12 @@ public class UIManager : MonoBehaviour
         PlayerSpwan.StrikerInstantiated += OnStrikerInstantiated;
     }
 
-    void OnStrikerInstantiated()
+    void OnStrikerInstantiated(GameObject gm)
     {
         // Find which player are you and find the respective slider
         // Access the "striker" GameObject and perform necessary actions
-        striker = GameObject.Find("Striker" + PhotonNetwork.LocalPlayer.ActorNumber);
+        
+        striker = gm;
         // ...
         strikerRb = striker.GetComponent<Rigidbody>();
         arrow = striker.transform.GetChild(0).gameObject;
