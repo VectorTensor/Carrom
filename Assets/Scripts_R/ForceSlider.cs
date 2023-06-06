@@ -4,11 +4,12 @@ using UnityEngine.UI;
 
 public class ForceSlider : MonoBehaviour
 {
+    float forceBarSpeed = 300f;
+
     float minValue = 0f;
     float maxValue = 200f;
-    float speed = 50f;
      
-    int multipler = 100;
+    int forceValueMultipler = 100;
 
     bool isIncreasing = true;
     
@@ -30,7 +31,6 @@ public class ForceSlider : MonoBehaviour
         {
             coroutine = AnimateForceBar();
         }
-
         StartCoroutine(coroutine);
     }
 
@@ -38,9 +38,8 @@ public class ForceSlider : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            
             Debug.Log("Force added");
-            currentValue = forceSlider.value * multipler; 
+            currentValue = forceSlider.value * forceValueMultipler; 
             Strikeforce.magnitude = currentValue;
             onforceset?.Invoke();
             forceSlider.gameObject.SetActive(false);
@@ -53,14 +52,14 @@ public class ForceSlider : MonoBehaviour
         {
             if (isIncreasing)
             {
-                forceSlider.value += Time.deltaTime * speed;
+                forceSlider.value += Time.deltaTime * forceBarSpeed;
 
                 if (forceSlider.value >= maxValue)
                     isIncreasing = false;
             }
             else
             {
-                forceSlider.value -= Time.deltaTime * speed;
+                forceSlider.value -= Time.deltaTime * forceBarSpeed;
 
                 if (forceSlider.value <= minValue)
                     isIncreasing = true;
