@@ -77,7 +77,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel("Gameplay");
+        PhotonNetwork.LoadLevel("Waiting");
 
     }
 
