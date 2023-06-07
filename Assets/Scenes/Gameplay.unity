@@ -3721,7 +3721,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIslider: {fileID: 1729290709}
   forceSlider: {fileID: 2044293077}
+  PositionSlider: {fileID: 401639181}
   player: {fileID: 0}
+  PlayerList: []
 --- !u!114 &1817867309
 MonoBehaviour:
   m_ObjectHideFlags: 0

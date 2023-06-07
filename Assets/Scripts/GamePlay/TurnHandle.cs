@@ -12,6 +12,7 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
 
     [SerializeField] GameObject forceSlider;
 
+    [SerializeField] GameObject PositionSlider;
     public GameObject player;
 
     public List<GameObject> PlayerList = new List<GameObject>();
@@ -30,6 +31,7 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
         //photonView.RPC("helloEveryone",RpcTarget.All,"hello mate");
         Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber) ;
         StartCoroutine(WaitTillPlayersAdded());
+        ActivatePlayerUIComponents();
         
     }
 
@@ -113,6 +115,7 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
 
         // Before activating and deactivating the players check if physics in completed (check playerobject velocity is 0 )
         //ActivateRequiredPlayers();
+        ActivatePlayerUIComponents();
     }
     [PunRPC]
     void nextTurn(){
@@ -138,13 +141,19 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
             photonView.RPC("nextTurn",RpcTarget.MasterClient);
 
     }
+    void ActivatePlayerUIComponents(){
+        
+
+        UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+        PositionSlider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+
+    }
 
     // Update is called once per frame
     void Update()
     {
         //&& turn == int.Parse(PhotonNetwork.LocalPlayer.ActorNumber)
 
-            UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
         
     }
     public void OnEvent(EventData photonEvent){
