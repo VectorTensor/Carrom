@@ -40,10 +40,10 @@ public class UIManager : MonoBehaviour
         //}
 
         //Reset striker position
-        if (strikerRb.velocity.magnitude == 0.0f && hasStriked)
-        {
-            ResetStrikerPosition();
-        }
+        //if (strikerRb.velocity.magnitude == 0.0f && hasStriked)
+        //{
+            //ResetStrikerPosition();
+        //}
 
         //Set striker postion with slider
         if (positionSlider.gameObject.activeSelf == true )

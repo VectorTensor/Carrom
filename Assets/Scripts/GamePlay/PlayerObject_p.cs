@@ -32,8 +32,13 @@ public class PlayerObject_p : MonoBehaviour
         gameObject.transform.localPosition = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1];
     }
     
-    void OnEnable(){
+    public void OnEnable(){
         UIManager.resetStriker += startingPostion;
+        gameObject.transform.localPosition = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1];
+
+        gameObject.transform.localRotation = Quaternion.Euler(RotationList[PhotonNetwork.LocalPlayer.ActorNumber -1]);
+
+        Debug.Log("object position intialized");
     }
 
     void OnDisable(){

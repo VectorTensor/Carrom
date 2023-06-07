@@ -31,7 +31,7 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
         //photonView.RPC("helloEveryone",RpcTarget.All,"hello mate");
         Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber) ;
         StartCoroutine(WaitTillPlayersAdded());
-        ActivatePlayerUIComponents();
+       // ActivatePlayerUIComponents();
         
     }
 
@@ -44,18 +44,24 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
 
         // code to activate required players and deactivate others
 
+        int index  = 1;        
+        foreach (GameObject gm in PlayerList ){
+
+            if (index != this.turn){
+                gm.transform.position = new Vector3(0,0,14);
+            }
+            index++;
+
+
+            
+        }
+        ActivatePlayerUIComponents();
         //ActivateRequiredPlayers();
 
     }
 
     void ActivateRequiredPlayers(){
 
-       int  index = 0; 
-       foreach(GameObject gm in PlayerList){
-
-            gm.SetActive(index +1 == turn); // if its the players turn then activate the gameObject
-            index ++;
-       }  
     }
 
     void activateSlider(){
@@ -110,13 +116,45 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
 
     [PunRPC]
     void sendTurn(int turn){
+        int prevTurn = this.turn;
         Debug.Log("turn" + turn);
         this.turn = turn;
 
+        StartCoroutine(WaitTillObjectVelZero(prevTurn)) ;   
+
         // Before activating and deactivating the players check if physics in completed (check playerobject velocity is 0 )
+        //ActivatePlayerUIComponents();
+
+    }
+
+    IEnumerator WaitTillObjectVelZero(int turn)
+    {
+        //GameObject gm = PlayerList[turn-1];
+
+        yield return new WaitForSeconds(1);
+        Debug.Log("Players sucessfully added");
+
+
+        int index  = 1;        
+        foreach (GameObject gm in PlayerList ){
+
+            if (index != this.turn){
+                gm.transform.position = new Vector3(0,0,14);
+            }
+            index ++;
+
+
+            
+        }
+        PlayerList[this.turn-1].GetComponent<PlayerObject_p>().OnEnable();
+        
+
         //ActivateRequiredPlayers();
         ActivatePlayerUIComponents();
+
     }
+
+
     [PunRPC]
     void nextTurn(){
         // How next turn is calculated
@@ -127,11 +165,6 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
         PhotonView photonView = PhotonView.Get(this);
 //        photonView.RPC("messageEveryone",RpcTarget.All,"Player turn "+ turn );
             photonView.RPC("sendTurn",RpcTarget.All, turn );
-
-
-
-        
-
 
     }
 

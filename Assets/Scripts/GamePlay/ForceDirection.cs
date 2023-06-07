@@ -26,7 +26,7 @@ public class ForceDirection : MonoBehaviour
     {
         Rot += Input.GetAxis("Mouse X") * sensitivity;
      //   Rot = Mathf.Clamp(Rot, minimum, maximum);
-        transform.localEulerAngles = new Vector3(0, Rot, 0);
+        transform.eulerAngles = new Vector3(0, Rot, 0);
 
         childY = transform.localRotation.eulerAngles.y;
 
