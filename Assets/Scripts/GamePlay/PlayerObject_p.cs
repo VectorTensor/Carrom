@@ -38,7 +38,7 @@ public class PlayerObject_p : MonoBehaviour
 
         gameObject.transform.localRotation = Quaternion.Euler(RotationList[PhotonNetwork.LocalPlayer.ActorNumber -1]);
 
-        Debug.Log("object position intialized");
+    //    Debug.Log("object position intialized");
     }
 
     void OnDisable(){
@@ -55,7 +55,7 @@ public class PlayerObject_p : MonoBehaviour
 
         gameObject.transform.localRotation = Quaternion.Euler(RotationList[PhotonNetwork.LocalPlayer.ActorNumber -1]);
 
-        Debug.Log("object position intialized");
+      //  Debug.Log("object position intialized");
     }
 
     // Start is called before the first frame update
@@ -70,7 +70,7 @@ public class PlayerObject_p : MonoBehaviour
 
         gameObject.transform.localRotation = Quaternion.Euler(RotationList[PhotonNetwork.LocalPlayer.ActorNumber -1]);
 
-        Debug.Log("Starto"); 
+       // Debug.Log("Starto"); 
 
 
 
