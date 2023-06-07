@@ -54,7 +54,7 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
         // Create an event that calls other client send the gameobject photonView id. In client the photon View id will be used to get refence 
         // of the playerObject and it will be stored in the PlayerList
 
-        object[] content = new object[] {gm.GetPhotonView().ViewID};
+        object[] content = new object[] {gm.GetPhotonView().ViewID, gm.name};
 
         RaiseEventOptions raiseEventOptions = new RaiseEventOptions{ Receivers = ReceiverGroup.All};
 
@@ -139,10 +139,12 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
             object[] data = (object[]) photonEvent.CustomData;
 
             int id = (int) data[0];
+            string name = (string) data[1];
 
             Debug.Log("this is the id " +  id);
             GameObject gm = PhotonView.Find(id).gameObject;
 
+            gm.name = name;
             PlayerList.Add(gm);
 
 
