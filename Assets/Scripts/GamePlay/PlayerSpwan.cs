@@ -4,7 +4,7 @@ using System;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 
-public class PlayerSpwan : MonoBehaviour, IOnEventCallback
+public class PlayerSpwan : MonoBehaviour 
 {
     [SerializeField] GameObject playerPrefab;
 
@@ -19,39 +19,10 @@ public class PlayerSpwan : MonoBehaviour, IOnEventCallback
 
         //Debug.Log("view id " + gm.GetPhotonView().ViewID); 
 
-        object[] content = new object[] {gm.GetPhotonView().ViewID};
-
-        RaiseEventOptions raiseEventOptions = new RaiseEventOptions{ Receivers = ReceiverGroup.All};
-
-        PhotonNetwork.RaiseEvent(OBJECTINITIALIZED, content, raiseEventOptions, SendOptions.SendReliable );
 
         StrikerInstantiated?.Invoke(gm);
    
     }
 
-
-    void OnEnable(){
-        PhotonNetwork.AddCallbackTarget(this);
-    }
-
-    void OnDisable(){
-        PhotonNetwork.RemoveCallbackTarget(this);
-    }
-
-    public void OnEvent(EventData photonEvent){
-
-        byte eventCode = photonEvent.Code;
-        
-        if (eventCode == OBJECTINITIALIZED ){
-            object[] data = (object[]) photonEvent.CustomData;
-
-            int id = (int) data[0];
-
-            Debug.Log("this is the id " +  id);
-
-        }
-
-    }
-   
 
 }

@@ -57,15 +57,15 @@ public class PlayerObject_p : MonoBehaviour
     void Start()
     {
 
-        //parent = GameObject.FindWithTag("GameManager");
+        parent = GameObject.FindWithTag("GameManager");
 
-        //gameObject.transform.parent = parent.transform;
+        gameObject.transform.parent = parent.transform;
 
-        //gameObject.transform.localPosition = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1];
+        gameObject.transform.localPosition = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1];
 
-        //gameObject.transform.localRotation = Quaternion.Euler(RotationList[PhotonNetwork.LocalPlayer.ActorNumber -1]);
+        gameObject.transform.localRotation = Quaternion.Euler(RotationList[PhotonNetwork.LocalPlayer.ActorNumber -1]);
 
-        //Debug.Log("Starto"); 
+        Debug.Log("Starto"); 
 
 
 
