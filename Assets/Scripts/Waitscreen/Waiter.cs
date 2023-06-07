@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class Waiter : MonoBehaviour
 {
-    public int required_number_of_players=2;
+    public static int required_number_of_players=2;
     public int number_of_players;
 
     // Start is called before the first frame update

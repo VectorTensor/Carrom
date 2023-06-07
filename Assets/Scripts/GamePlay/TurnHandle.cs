@@ -29,9 +29,32 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
         //PhotonView photonView = PhotonView.Get(this);
         //photonView.RPC("helloEveryone",RpcTarget.All,"hello mate");
         Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber) ;
+        StartCoroutine(WaitTillPlayersAdded());
         
     }
 
+    IEnumerator WaitTillPlayersAdded()
+    {
+        while (PlayerList.Count < Waiter.required_number_of_players){
+            yield return null;
+        }
+        Debug.Log("Players sucessfully added");
+
+        // code to activate required players and deactivate others
+
+        //ActivateRequiredPlayers();
+
+    }
+
+    void ActivateRequiredPlayers(){
+
+       int  index = 0; 
+       foreach(GameObject gm in PlayerList){
+
+            gm.SetActive(index +1 == turn); // if its the players turn then activate the gameObject
+            index ++;
+       }  
+    }
 
     void activateSlider(){
         forceSlider.SetActive(true);
@@ -87,16 +110,9 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
     void sendTurn(int turn){
         Debug.Log("turn" + turn);
         this.turn = turn;
-        //player.GetComponent<Collider>().enabled = (turn == PhotonNetwork.LocalPlayer.ActorNumber);
-       // player.GetComponent<MeshRenderer>().enabled =(turn == PhotonNetwork.LocalPlayer.ActorNumber);
-        //if (turn != PhotonNetwork.LocalPlayer.ActorNumber){
 
-            //player.transform.position= new Vector3(0,0,14);
-        //}
-        //else{
-            //player.GetComponent<PlayerObject_p>().startingPostion();
-        //}
-       // player.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+        // Before activating and deactivating the players check if physics in completed (check playerobject velocity is 0 )
+        //ActivateRequiredPlayers();
     }
     [PunRPC]
     void nextTurn(){
