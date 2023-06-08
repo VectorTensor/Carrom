@@ -19,12 +19,6 @@ public class GameplayBegin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        number_of_players = PhotonNetwork.CurrentRoom.PlayerCount;
-        if (number_of_players >= required_number_of_players){
-
-            game.SetActive(true);
-
-        }
         
     }
 }

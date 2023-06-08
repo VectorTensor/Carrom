@@ -1,15 +1,25 @@
+using System.Threading;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
+using ExitGames.Client.Photon;
 
-public class TurnHandle : MonoBehaviour
+public class TurnHandle : MonoBehaviour , IOnEventCallback
 {
     [SerializeField] GameObject UIslider;
 
     [SerializeField] GameObject forceSlider;
+
+    [SerializeField] GameObject PositionSlider;
+    public GameObject player;
+
+    public List<GameObject> PlayerList = new List<GameObject>();
+
+    const byte OBJECTINITIALIZED  = 1;
     
-    private int turn; 
+    private int turn=1; 
     private int total_numbers_of_players =2 ;
     // Start is called before the first frame update
     void Start()
@@ -20,14 +30,70 @@ public class TurnHandle : MonoBehaviour
         //PhotonView photonView = PhotonView.Get(this);
         //photonView.RPC("helloEveryone",RpcTarget.All,"hello mate");
         Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber) ;
+        StartCoroutine(WaitTillPlayersAdded());
+       // ActivatePlayerUIComponents();
         
     }
 
+    IEnumerator WaitTillPlayersAdded()
+    {
+        while (PlayerList.Count < Waiter.required_number_of_players){
+            yield return null;
+        }
+        Debug.Log("Players sucessfully added");
+
+        // code to activate required players and deactivate others
+
+        int index  = 1;        
+        foreach (GameObject gm in PlayerList ){
+
+            if (index != this.turn){
+                gm.transform.position = new Vector3(0,0,14);
+            }
+            index++;
+
+
+            
+        }
+        ActivatePlayerUIComponents();
+        //ActivateRequiredPlayers();
+
+    }
+
+    void ActivateRequiredPlayers(){
+
+    }
 
     void activateSlider(){
         forceSlider.SetActive(true);
     }
 
+    void savePlayerReference(GameObject gm){
+
+        player = gm; 
+       // player.GetComponent<PlayerObject_p>().Initialize();
+
+        //player.GetComponent<Collider>().enabled = (turn == PhotonNetwork.LocalPlayer.ActorNumber);
+        //player.GetComponent<MeshRenderer>().enabled =(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+        //Thread.Sleep(1000);
+        //if (turn != PhotonNetwork.LocalPlayer.ActorNumber){
+
+            //Debug.Log("gone");
+            //player.transform.position= new Vector3(0,0,14);
+        //}
+
+        // Create an event that calls other client send the gameobject photonView id. In client the photon View id will be used to get refence 
+        // of the playerObject and it will be stored in the PlayerList
+
+        object[] content = new object[] {gm.GetPhotonView().ViewID, gm.name};
+
+        RaiseEventOptions raiseEventOptions = new RaiseEventOptions{ Receivers = ReceiverGroup.All};
+
+        PhotonNetwork.RaiseEvent(OBJECTINITIALIZED, content, raiseEventOptions, SendOptions.SendReliable );
+
+
+
+    }
 
     [PunRPC]
     void messageEveryone(string message){
@@ -36,19 +102,59 @@ public class TurnHandle : MonoBehaviour
 
     }
     void OnEnable(){
+        PhotonNetwork.AddCallbackTarget(this);
         Striker_R.endAction += actionDone;
         ForceDirection.directionGiven += activateSlider; 
+        PlayerSpwan.StrikerInstantiated  += savePlayerReference; 
     }
     void OnDisable(){
+        PhotonNetwork.RemoveCallbackTarget(this);
         Striker_R.endAction -= actionDone;
         ForceDirection.directionGiven -= activateSlider; 
+        PlayerSpwan.StrikerInstantiated  -= savePlayerReference; 
     }
 
     [PunRPC]
     void sendTurn(int turn){
+        int prevTurn = this.turn;
         Debug.Log("turn" + turn);
         this.turn = turn;
+
+        StartCoroutine(WaitTillObjectVelZero(prevTurn)) ;   
+
+        // Before activating and deactivating the players check if physics in completed (check playerobject velocity is 0 )
+        //ActivatePlayerUIComponents();
+
     }
+
+    IEnumerator WaitTillObjectVelZero(int turn)
+    {
+        //GameObject gm = PlayerList[turn-1];
+
+        yield return new WaitForSeconds(1);
+        Debug.Log("Players sucessfully added");
+
+
+        int index  = 1;        
+        foreach (GameObject gm in PlayerList ){
+
+            if (index != this.turn){
+                gm.transform.position = new Vector3(0,0,14);
+            }
+            index ++;
+
+
+            
+        }
+        PlayerList[this.turn-1].GetComponent<PlayerObject_p>().OnEnable();
+        
+
+        //ActivateRequiredPlayers();
+        ActivatePlayerUIComponents();
+
+    }
+
+
     [PunRPC]
     void nextTurn(){
         // How next turn is calculated
@@ -58,12 +164,7 @@ public class TurnHandle : MonoBehaviour
          Debug.Log("nextTurn function called");
         PhotonView photonView = PhotonView.Get(this);
 //        photonView.RPC("messageEveryone",RpcTarget.All,"Player turn "+ turn );
-            photonView.RPC("sendTurn",RpcTarget.Others, turn );
-
-
-
-        
-
+            photonView.RPC("sendTurn",RpcTarget.All, turn );
 
     }
 
@@ -71,6 +172,14 @@ public class TurnHandle : MonoBehaviour
 
             PhotonView photonView = PhotonView.Get(this);
             photonView.RPC("nextTurn",RpcTarget.MasterClient);
+
+    }
+    void ActivatePlayerUIComponents(){
+        
+
+        UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+        PositionSlider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
+
     }
 
     // Update is called once per frame
@@ -78,7 +187,27 @@ public class TurnHandle : MonoBehaviour
     {
         //&& turn == int.Parse(PhotonNetwork.LocalPlayer.ActorNumber)
 
-            UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
         
+    }
+    public void OnEvent(EventData photonEvent){
+
+        byte eventCode = photonEvent.Code;
+        
+        if (eventCode == OBJECTINITIALIZED ){
+            object[] data = (object[]) photonEvent.CustomData;
+
+            int id = (int) data[0];
+            string name = (string) data[1];
+
+            Debug.Log("this is the id " +  id);
+            GameObject gm = PhotonView.Find(id).gameObject;
+
+            gm.name = name;
+            PlayerList.Add(gm);
+
+
+
+        }
+
     }
 }
