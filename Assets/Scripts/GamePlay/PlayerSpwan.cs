@@ -15,9 +15,4 @@ public class PlayerSpwan : MonoBehaviour
 
         StrikerInstantiated?.Invoke();
     }
-
-    void SpawnStriker() //Spawn striker at first
-    {
-
-    }
 }
