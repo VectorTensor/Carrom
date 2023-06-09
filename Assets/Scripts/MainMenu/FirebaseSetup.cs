@@ -22,7 +22,7 @@ public class FirebaseSetup : MonoBehaviour
     [SerializeField] GameObject networkManager;
 
 
-    void Start()
+    void Awake()
     {
         //Firebase Config
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {

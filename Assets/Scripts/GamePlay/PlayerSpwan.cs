@@ -1,8 +1,6 @@
 using UnityEngine;
 using Photon.Pun;
 using System;
-using Photon.Realtime;
-using ExitGames.Client.Photon;
 
 public class PlayerSpwan : MonoBehaviour 
 {
@@ -10,8 +8,8 @@ public class PlayerSpwan : MonoBehaviour
 
     public static event Action<GameObject> StrikerInstantiated;
 
-
     const byte OBJECTINITIALIZED  = 1;
+    
     void Start()
     {
         GameObject gm = PhotonNetwork.Instantiate(playerPrefab.name, Vector3.zero, Quaternion.identity);
@@ -21,8 +19,7 @@ public class PlayerSpwan : MonoBehaviour
 
 
         StrikerInstantiated?.Invoke(gm);
-   
+
+        IronSource.Agent.destroyBanner();
     }
-
-
 }
