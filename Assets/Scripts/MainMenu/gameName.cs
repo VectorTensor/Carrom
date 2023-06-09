@@ -1,19 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Collections;
+
 public class gameName : MonoBehaviour
 {
-    // Start is called before the first frame update
+    TextMeshProUGUI tx;
+
     void Start()
     {
-       //TextMeshProUGUI tx = GetComponent<TextMeshProUGUI>();
-       //tx.text = FirebaseSetup.fd.GameName; 
+        tx = GetComponent<TextMeshProUGUI>();
+        StartCoroutine("C_SetGameName");
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator C_SetGameName()
     {
-        
+        yield return new WaitForSeconds(2);
+        tx.text = FirebaseSetup.fd.GameName;
+        Debug.Log(FirebaseSetup.fd.GameName);
     }
 }

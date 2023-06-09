@@ -30,7 +30,7 @@ public class ForceDirection : MonoBehaviour
 
         childY = transform.localRotation.eulerAngles.y;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(1))
         {
             Vector3 x = gameObject.transform.GetChild(0).gameObject.transform.GetChild(0).position - gameObject.transform.GetChild(0).gameObject.transform.GetChild(1).position; 
             Strikeforce.direction =  x.normalized;
