@@ -34,9 +34,9 @@ public class ForceSlider : MonoBehaviour
         StartCoroutine(coroutine);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Force added");
             currentValue = forceSlider.value * forceValueMultipler; 
