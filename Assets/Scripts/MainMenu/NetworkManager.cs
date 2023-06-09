@@ -46,13 +46,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.NickName = GameObject.Find("PlayerName").GetComponent<TMP_InputField>().text;
         //Debug.Log(PhotonNetwork.NickName);
         //Debug.Log("logged");
+        onClickCreateRoom();
     }
 
-    public void onClickCreateRoom(string name){
+    public void onClickCreateRoom(){
 
-        RoomOptions options = new RoomOptions();
-        options.MaxPlayers = numberOfPlayers;
-        PhotonNetwork.JoinOrCreateRoom(name,options, TypedLobby.Default);
+        PhotonNetwork.JoinRandomOrCreateRoom();
 
     }
 
@@ -68,12 +67,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     }
 
-    public void onClickJoinRoom(string name){
-
-        PhotonNetwork.JoinRoom(name);
-
-
-    }
 
     public override void OnJoinedRoom()
     {

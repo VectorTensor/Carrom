@@ -28,7 +28,7 @@ public class Play : MonoBehaviour
 
     void buttonHandler()
     {
-        CreateorJoin.SetActive(true);
+        //CreateorJoin.SetActive(true);
         
         displayInterstitial.SetActive(false);
         displayRewarded.SetActive(false);

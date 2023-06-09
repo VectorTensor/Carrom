@@ -15,6 +15,12 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
     [SerializeField] GameObject PositionSlider;
     public GameObject player;
 
+    List<Vector3> PositionList = new List<Vector3>(){
+        new Vector3(360f,200f,0),
+        new Vector3(360f,1250f,0),
+        new Vector3(-2.01f,0.1f,-0.17f),
+        new Vector3(1.56f,0.1f,-0.17f)
+    };
     public List<GameObject> PlayerList = new List<GameObject>();
 
     const byte OBJECTINITIALIZED  = 1;
@@ -177,6 +183,7 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
     void ActivatePlayerUIComponents(){
         
 
+        PositionSlider.GetComponent<RectTransform>().position = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1]; 
         UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
         PositionSlider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
 
