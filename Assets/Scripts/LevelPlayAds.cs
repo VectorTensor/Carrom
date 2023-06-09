@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class LevelPlayAds : MonoBehaviour
@@ -9,6 +8,7 @@ public class LevelPlayAds : MonoBehaviour
         IronSource.Agent.validateIntegration();
 
         IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+        IronSource.Agent.loadInterstitial();
     }
 
     void OnApplicationPause(bool isPaused)
@@ -161,11 +161,11 @@ public class LevelPlayAds : MonoBehaviour
     }*/
 
     //Interstitial Buttons
-    public void LoadFullAd()
+    /*public void LoadFullAd()
     {
-        IronSource.Agent.loadInterstitial();
 
-    }
+    }*/
+
     public void ShowFullSized()
     {
         if(IronSource.Agent.isInterstitialReady())
@@ -176,7 +176,6 @@ public class LevelPlayAds : MonoBehaviour
         {
             Debug.Log("Interstitial Ad Not Ready");
         }
-
     }
 
     //Rewarded Button
@@ -190,6 +189,5 @@ public class LevelPlayAds : MonoBehaviour
         {
             Debug.Log("Rewarded Ad Not Ready OR Disabled");
         }
-
     }
 }

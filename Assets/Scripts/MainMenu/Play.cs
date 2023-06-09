@@ -8,12 +8,15 @@ public class Play : MonoBehaviour
     public GameObject CreateorJoin;
     public GameObject room;
 
+    //Ads button
+    public GameObject displayInterstitial;
+    public GameObject displayRewarded;
+
     //public delegate void OnPlayClicked();
     //public static OnPlayClicked onPlayClicked;
-    
+
     void Start()
     {
-        
         //gameObject.SetActive(FirebaseSetup.fd.isPlayable);
 
         room.SetActive(false);
@@ -26,6 +29,10 @@ public class Play : MonoBehaviour
     void buttonHandler()
     {
         CreateorJoin.SetActive(true);
+        
+        displayInterstitial.SetActive(false);
+        displayRewarded.SetActive(false);
+
         NetworkManager.GetInstance().playButtonClicked();
         //onPlayClicked?.Invoke();
     }
