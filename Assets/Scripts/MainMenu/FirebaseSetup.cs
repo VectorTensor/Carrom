@@ -21,8 +21,10 @@ public class FirebaseSetup : MonoBehaviour
     [SerializeField] GameObject mainScene;
     [SerializeField] GameObject networkManager;
 
+    //public delegate void RemoteValueReady();
+    //public static RemoteValueReady remoteValueReady;
 
-    void Awake()
+    void Start()
     {
         //Firebase Config
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
@@ -50,8 +52,9 @@ public class FirebaseSetup : MonoBehaviour
 
         FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults).ContinueWithOnMainThread((task) => {
             FetchDataAsync();
-            FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener += ConfigUpdateListenerEventHandler;
+            //FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener += ConfigUpdateListenerEventHandler;
         });
+
     }
 
     //fetch values from remote config backend
@@ -72,6 +75,7 @@ public class FirebaseSetup : MonoBehaviour
 
         var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
         var info = remoteConfig.Info;
+
         if (info.LastFetchStatus != LastFetchStatus.Success)
         {
             Debug.LogError($"{nameof(FetchComplete)} was unsuccessful\n{nameof(info.LastFetchStatus)}: {info.LastFetchStatus}");
@@ -93,6 +97,8 @@ public class FirebaseSetup : MonoBehaviour
 
                 mainScene.SetActive(true);
                 networkManager.SetActive(true);
+                
+                //remoteValueReady?.Invoke();
             });
     }
 
@@ -120,6 +126,7 @@ public class FirebaseSetup : MonoBehaviour
               Debug.Log(fd.GameName);
               Debug.Log(fd.isPlayable);
           });
+
     }
 
     // Stop the listener.
