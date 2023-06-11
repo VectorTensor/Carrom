@@ -5,6 +5,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
+using TMPro;
 
 public class TurnHandle : MonoBehaviour , IOnEventCallback
 {
@@ -12,6 +13,7 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
 
     [SerializeField] GameObject forceSlider;
 
+    [SerializeField] GameObject PlayerNames;
     [SerializeField] GameObject PositionSlider;
     public GameObject player;
 
@@ -182,6 +184,14 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
     }
     void ActivatePlayerUIComponents(){
         
+        for (int i = 0 ; i <total_numbers_of_players;i++){
+
+            
+            PlayerNames.transform.GetChild(i).gameObject.SetActive(turn -1  == i);
+
+        }
+
+        PlayerNames.transform.GetChild(turn -1).gameObject.GetComponent<TextMeshProUGUI>().text = PhotonNetwork.LocalPlayer.Get(turn).NickName;
 
         PositionSlider.GetComponent<RectTransform>().position = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1]; 
         UIslider.SetActive(turn == PhotonNetwork.LocalPlayer.ActorNumber);
