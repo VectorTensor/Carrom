@@ -1,20 +1,20 @@
 using UnityEngine;
-using TMPro;
 using System.Collections;
+using UnityEngine.UI;
 
 public class gameName : MonoBehaviour
 {
-    TextMeshProUGUI tx;
+    Text tx;
 
     void Start()
     {
-        tx = GetComponent<TextMeshProUGUI>();
+        tx = GetComponent<Text>();
         StartCoroutine("C_SetGameName");
     }
 
     IEnumerator C_SetGameName()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2.0f);
         tx.text = FirebaseSetup.fd.GameName;
         Debug.Log(FirebaseSetup.fd.GameName);
     }

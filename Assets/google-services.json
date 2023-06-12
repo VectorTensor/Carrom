@@ -1,26 +1,36 @@
 {
   "project_info": {
-    "project_number": "820258732794",
-    "project_id": "carrom-68464",
-    "storage_bucket": "carrom-68464.appspot.com"
+    "project_number": "1071998143855",
+    "project_id": "carromgame-fff60",
+    "storage_bucket": "carromgame-fff60.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:820258732794:android:f311b57974eefb9f6ce743",
+        "mobilesdk_app_id": "1:1071998143855:android:61fd81dd94aa7514a4ac9a",
         "android_client_info": {
           "package_name": "com.DefaultCompany.Carrom"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "1071998143855-33p9j9tieaneo2scg580kr6g0bb8q4du.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDJWILDICQyoaRrEVn5BkDlMh_OUvbLFJM"
+          "current_key": "AIzaSyA5WcoiojRFB7mCSlvTOreY1tRlRfcMrLw"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1071998143855-33p9j9tieaneo2scg580kr6g0bb8q4du.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
