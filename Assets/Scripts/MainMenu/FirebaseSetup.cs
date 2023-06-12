@@ -4,57 +4,70 @@ using UnityEngine;
 using System.Threading.Tasks;
 using Firebase.Extensions;
 using Firebase.RemoteConfig;
+using Firebase;
+using UnityEngine.UI;
 
 public class FirebaseSetup : MonoBehaviour
 {
-    public class firebaseData
+    public bool firebaseIsReady = false;
+
+    public class DataFromFirebase
     {
-        public bool isShow;
         public string GameName;
         public bool isPlayable;
+        public bool isShow;
     }
 
     Dictionary<string, object> defaults = new Dictionary<string, object>();
 
-    public static firebaseData fd = new firebaseData();
+    public static DataFromFirebase fd = new DataFromFirebase();
 
     [SerializeField] GameObject mainScene;
     [SerializeField] GameObject networkManager;
 
-    //public delegate void RemoteValueReady();
-    //public static RemoteValueReady remoteValueReady;
-
-    void Start()
+    void Awake()
     {
         //Firebase Config
-        Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        {
             var dependencyStatus = task.Result;
-            if (dependencyStatus == Firebase.DependencyStatus.Available)
+            if (dependencyStatus == DependencyStatus.Available)
             {
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
-                var app = Firebase.FirebaseApp.DefaultInstance;
-                Debug.Log("Firebase init");
-                // Set a flag here to indicate whether Firebase is ready to use by your app.
+                Debug.Log("Firebase successful");
+                firebaseIsReady = true;
             }
             else
             {
                 Debug.Log("Firebase failed");
                 Debug.LogError(String.Format("Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                // Firebase Unity SDK is not safe to use here.
+                firebaseIsReady = false;
             }
         });
+    }
 
-        //in-app default values
-        defaults.Add("isShow", true);
-        defaults.Add("GameName", "Carrom Chronicles");
-        defaults.Add("isPlayable", false);
+    void Update()
+    {
+        if (firebaseIsReady)
+        {
+            Debug.Log("Setting values");
 
-        FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults).ContinueWithOnMainThread((task) => {
-            FetchDataAsync();
-            //FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener += ConfigUpdateListenerEventHandler;
-        });
+            //in-app default values
+            DataFromFirebase defaultDatas = new DataFromFirebase();
+            defaultDatas.GameName = "Carrom";
+            defaultDatas.isPlayable = true;
+            defaultDatas.isShow = true;
 
+            string json = JsonUtility.ToJson(defaultDatas);
+            defaults.Add("Carrom", json);
+
+            FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults).ContinueWithOnMainThread((task) =>
+            {
+                FetchDataAsync();
+                FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener += ConfigUpdateListenerEventHandler;
+            });
+
+            firebaseIsReady = false;
+        }
     }
 
     //fetch values from remote config backend
@@ -88,17 +101,19 @@ public class FirebaseSetup : MonoBehaviour
 
                 Debug.Log($"Remote data loaded and ready for use. Last fetch time {info.FetchTime}.");
 
-                fd.isShow= FirebaseRemoteConfig.DefaultInstance.GetValue("isShow").BooleanValue;
-                fd.GameName = FirebaseRemoteConfig.DefaultInstance.GetValue("GameName").StringValue;
-                fd.isPlayable= FirebaseRemoteConfig.DefaultInstance.GetValue("isPlayable").BooleanValue;
+                string data = FirebaseRemoteConfig.DefaultInstance.GetValue("CarromJson").StringValue;
+                var loadedData = JsonUtility.FromJson<DataFromFirebase>(data);
 
-                Debug.Log(fd.GameName);
-                Debug.Log(fd.isPlayable);
+                Debug.Log(loadedData.GameName);
+                Debug.Log(loadedData.isPlayable);
+                Debug.Log(loadedData.isShow);
+
+                fd.GameName = loadedData.GameName;
+                fd.isPlayable = loadedData.isPlayable;
+                fd.isShow = loadedData.isShow;
 
                 mainScene.SetActive(true);
                 networkManager.SetActive(true);
-                
-                //remoteValueReady?.Invoke();
             });
     }
 
@@ -117,16 +132,20 @@ public class FirebaseSetup : MonoBehaviour
         var remoteConfig = FirebaseRemoteConfig.DefaultInstance;
         remoteConfig.ActivateAsync().ContinueWith(
           task => {
-              
+
               //DisplayWelcomeMessage();
-              fd.isShow= FirebaseRemoteConfig.DefaultInstance.GetValue("isShow").BooleanValue;
-              fd.GameName = FirebaseRemoteConfig.DefaultInstance.GetValue("GameName").StringValue;
-              fd.isPlayable= FirebaseRemoteConfig.DefaultInstance.GetValue("isPlayable").BooleanValue;
+              var realData = FirebaseRemoteConfig.DefaultInstance.GetValue("Carrom").StringValue;
 
-              Debug.Log(fd.GameName);
-              Debug.Log(fd.isPlayable);
+              var loadedRealData = JsonUtility.FromJson<DataFromFirebase>(realData);
+
+              Debug.Log(loadedRealData.GameName);
+              Debug.Log(loadedRealData.isPlayable);
+              Debug.Log(loadedRealData.isShow);
+
+              fd.GameName = loadedRealData.GameName;
+              fd.isPlayable = loadedRealData.isPlayable;
+              fd.isShow = loadedRealData.isShow;
           });
-
     }
 
     // Stop the listener.

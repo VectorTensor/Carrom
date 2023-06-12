@@ -8,6 +8,8 @@ using UnityEngine.UI;
 using TMPro;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] Button playButton;
+
     public static NetworkManager instance;
     private int numberOfPlayers;
     [SerializeField]
@@ -35,7 +37,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         GameObject button = GameObject.Find("Play");
-        button.GetComponent<Button>().interactable = true;
+        button.GetComponent<Button>().interactable = FirebaseSetup.fd.isPlayable;
         
         
 
