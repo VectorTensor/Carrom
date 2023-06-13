@@ -8,11 +8,11 @@ using UnityEngine.UI;
 using TMPro;
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    [SerializeField] Button playButton;
+    [SerializeField] GameObject playButton;
 
     public static NetworkManager instance;
     private int numberOfPlayers;
-    [SerializeField]
+    [SerializeField] GameObject PlayerName; 
     // Start is called before the first frame update
 
     void Awake(){
@@ -28,32 +28,31 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void Start()
     {
         
-        GameObject button = GameObject.Find("Play");
-        button.GetComponent<Button>().interactable = false;
+        playButton.GetComponent<Button>().interactable = false;
         
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public override void OnConnectedToMaster()
     {
-        GameObject button = GameObject.Find("Play");
-        button.GetComponent<Button>().interactable = FirebaseSetup.fd.isPlayable;
-        
+        playButton.GetComponent<Button>().interactable = FirebaseSetup.fd.isPlayable;
+        //playButton.GetComponent<Button>().interactable = true;        
         
 
     }
 
     public void playButtonClicked(){
 
-        PhotonNetwork.NickName = GameObject.Find("PlayerName").GetComponent<TMP_InputField>().text;
+        PhotonNetwork.NickName = PlayerName.GetComponent<TMP_InputField>().text;
         //Debug.Log(PhotonNetwork.NickName);
         //Debug.Log("logged");
         onClickCreateRoom();
     }
 
     public void onClickCreateRoom(){
-
-        PhotonNetwork.JoinRandomOrCreateRoom();
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = 2; //  Change this variable for the max room number 
+        PhotonNetwork.JoinRandomOrCreateRoom( null,0, MatchmakingMode.FillRoom,null,null, null,roomOptions );
 
     }
 

@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using System;
 
 public class Exit : MonoBehaviour
 {
+    public static event Action PlayerLeftRoom;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +18,9 @@ public class Exit : MonoBehaviour
     void leaveRoom(){
 
         PhotonNetwork.LeaveRoom();
+        PlayerLeftRoom?.Invoke();
+
         SceneManager.LoadScene("SampleScene");
-        
             
     }
 

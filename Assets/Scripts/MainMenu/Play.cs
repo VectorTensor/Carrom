@@ -19,8 +19,6 @@ public class Play : MonoBehaviour
     {
         //gameObject.SetActive(FirebaseSetup.fd.isPlayable);
 
-        room.SetActive(false);
-        CreateorJoin.SetActive(false);
 
         button = GetComponent<Button>();
         button.onClick.AddListener(buttonHandler);
