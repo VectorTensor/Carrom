@@ -6,6 +6,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class TurnHandle : MonoBehaviour , IOnEventCallback
 {
@@ -79,19 +80,6 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
     void savePlayerReference(GameObject gm){
 
         player = gm; 
-       // player.GetComponent<PlayerObject_p>().Initialize();
-
-        //player.GetComponent<Collider>().enabled = (turn == PhotonNetwork.LocalPlayer.ActorNumber);
-        //player.GetComponent<MeshRenderer>().enabled =(turn == PhotonNetwork.LocalPlayer.ActorNumber);
-        //Thread.Sleep(1000);
-        //if (turn != PhotonNetwork.LocalPlayer.ActorNumber){
-
-            //Debug.Log("gone");
-            //player.transform.position= new Vector3(0,0,14);
-        //}
-
-        // Create an event that calls other client send the gameobject photonView id. In client the photon View id will be used to get refence 
-        // of the playerObject and it will be stored in the PlayerList
 
         object[] content = new object[] {gm.GetPhotonView().ViewID, gm.name};
 
@@ -114,12 +102,14 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
         Striker_R.endAction += actionDone;
         ForceDirection.directionGiven += activateSlider; 
         PlayerSpwan.StrikerInstantiated  += savePlayerReference; 
+        Exit.PlayerLeftRoom += PlayerLeft;
     }
     void OnDisable(){
         PhotonNetwork.RemoveCallbackTarget(this);
         Striker_R.endAction -= actionDone;
         ForceDirection.directionGiven -= activateSlider; 
         PlayerSpwan.StrikerInstantiated  -= savePlayerReference; 
+        Exit.PlayerLeftRoom -= PlayerLeft;
     }
 
     [PunRPC]
@@ -169,10 +159,24 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
         turn = turn  % total_numbers_of_players+1; 
 
 
-         Debug.Log("nextTurn function called");
         PhotonView photonView = PhotonView.Get(this);
 //        photonView.RPC("messageEveryone",RpcTarget.All,"Player turn "+ turn );
             photonView.RPC("sendTurn",RpcTarget.All, turn );
+
+    }
+    [PunRPC]
+    void RemovePlayer(){
+
+        Debug.Log("Rpc called");
+        SceneManager.LoadScene("Waiting");
+    }
+
+    void PlayerLeft(){
+
+            Debug.Log("Player left function called");
+            PhotonView photonView = PhotonView.Get(this);
+            photonView.RPC("RemovePlayer",RpcTarget.Others);
+
 
     }
 
