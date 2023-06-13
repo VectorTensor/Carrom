@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Firebase.Extensions;
 using Firebase.RemoteConfig;
 using Firebase;
-using UnityEngine.SceneManagement;
 
 public class FirebaseSetup : MonoBehaviour
 {
@@ -63,7 +62,7 @@ public class FirebaseSetup : MonoBehaviour
             FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults).ContinueWithOnMainThread((task) =>
             {
                 FetchDataAsync();
-                //FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener += ConfigUpdateListenerEventHandler;
+                FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener += ConfigUpdateListenerEventHandler;
             });
 
             firebaseIsReady = false;

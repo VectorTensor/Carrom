@@ -1,13 +1,15 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class LevelPlayAds : MonoBehaviour
 {
-    void Start()
+    async void Start()
     {
         IronSource.Agent.init("1a4c4ed95");
         IronSource.Agent.validateIntegration();
 
-        if(FirebaseSetup.fd.isShow == true)
+        await WaitDataRetrival();
+        if (FirebaseSetup.fd.isShow == true)
         {
             IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.TOP);
         }
@@ -17,6 +19,14 @@ public class LevelPlayAds : MonoBehaviour
         }
 
         IronSource.Agent.loadInterstitial();
+    }
+
+    async Task WaitDataRetrival()
+    {
+        while (FirebaseSetup.fd.isShow != true)
+        {
+            await Task.Yield();
+        }
     }
 
     void OnApplicationPause(bool isPaused)
