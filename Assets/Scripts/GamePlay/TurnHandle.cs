@@ -18,8 +18,8 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
     public GameObject player;
 
     List<Vector3> PositionList = new List<Vector3>(){
-        new Vector3(360f,200f,0),
-        new Vector3(360f,1250f,0),
+        new Vector3(0,200f,0),
+        new Vector3(0f,1500f,0),
         new Vector3(-2.01f,0.1f,-0.17f),
         new Vector3(1.56f,0.1f,-0.17f)
     };

@@ -5,10 +5,13 @@ using System.Threading.Tasks;
 using Firebase.Extensions;
 using Firebase.RemoteConfig;
 using Firebase;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class FirebaseSetup : MonoBehaviour
 {
+    // Callback function for scene change
+    public static event Action OnSceneChange;
+
     public bool firebaseIsReady = false;
 
     public class DataFromFirebase
@@ -21,9 +24,6 @@ public class FirebaseSetup : MonoBehaviour
     Dictionary<string, object> defaults = new Dictionary<string, object>();
 
     public static DataFromFirebase fd = new DataFromFirebase();
-
-    [SerializeField] GameObject mainScene;
-    [SerializeField] GameObject networkManager;
 
     void Awake()
     {
@@ -63,7 +63,7 @@ public class FirebaseSetup : MonoBehaviour
             FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults).ContinueWithOnMainThread((task) =>
             {
                 FetchDataAsync();
-                FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener += ConfigUpdateListenerEventHandler;
+                //FirebaseRemoteConfig.DefaultInstance.OnConfigUpdateListener += ConfigUpdateListenerEventHandler;
             });
 
             firebaseIsReady = false;
@@ -112,9 +112,10 @@ public class FirebaseSetup : MonoBehaviour
                 fd.isPlayable = loadedData.isPlayable;
                 fd.isShow = loadedData.isShow;
 
-                mainScene.SetActive(true);
-                networkManager.SetActive(true);
+                // Invoke the callback when scene change is required
+                //OnSceneChange?.Invoke();
             });
+
     }
 
     // Handle real-time Remote Config events. (Subscriber)
@@ -137,10 +138,6 @@ public class FirebaseSetup : MonoBehaviour
               var realData = FirebaseRemoteConfig.DefaultInstance.GetValue("Carrom").StringValue;
 
               var loadedRealData = JsonUtility.FromJson<DataFromFirebase>(realData);
-
-              Debug.Log(loadedRealData.GameName);
-              Debug.Log(loadedRealData.isPlayable);
-              Debug.Log(loadedRealData.isShow);
 
               fd.GameName = loadedRealData.GameName;
               fd.isPlayable = loadedRealData.isPlayable;

@@ -7,7 +7,15 @@ public class LevelPlayAds : MonoBehaviour
         IronSource.Agent.init("1a4c4ed95");
         IronSource.Agent.validateIntegration();
 
-        IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.BOTTOM);
+        if(FirebaseSetup.fd.isShow == true)
+        {
+            IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.TOP);
+        }
+        else
+        {
+            Debug.Log("Not allowed");
+        }
+
         IronSource.Agent.loadInterstitial();
     }
 
@@ -166,7 +174,7 @@ public class LevelPlayAds : MonoBehaviour
 
     }*/
 
-    public void ShowFullSized()
+    /*public void ShowFullSized()
     {
         if(IronSource.Agent.isInterstitialReady())
         {
@@ -176,18 +184,5 @@ public class LevelPlayAds : MonoBehaviour
         {
             Debug.Log("Interstitial Ad Not Ready");
         }
-    }
-
-    //Rewarded Button
-    public void ShowRewardAd()
-    {
-        if (IronSource.Agent.isRewardedVideoAvailable() && FirebaseSetup.fd.isShow)
-        {
-            IronSource.Agent.showRewardedVideo();
-        }
-        else
-        {
-            Debug.Log("Rewarded Ad Not Ready OR Disabled");
-        }
-    }
+    }*/
 }
