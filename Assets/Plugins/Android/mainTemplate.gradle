@@ -35,7 +35,7 @@ android {
     ndkPath "**NDKPATH**"
 
     compileSdkVersion **APIVERSION**
-    buildToolsVersion '**BUILDTOOLS**'
+    buildToolsVersion '33.0.0'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11

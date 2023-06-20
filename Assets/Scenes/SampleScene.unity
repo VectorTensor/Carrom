@@ -1059,11 +1059,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 100
+  far clip plane: 100.01
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1087,7 +1087,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1995,9 +1995,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 790368016362535509, guid: bcc7cd80a189037419852ab13c997e47, type: 3}
+      propertyPath: PlayerName
+      value: 
+      objectReference: {fileID: 126030083}
+    - target: {fileID: 790368016362535509, guid: bcc7cd80a189037419852ab13c997e47, type: 3}
       propertyPath: playButton
       value: 
-      objectReference: {fileID: 302626687}
+      objectReference: {fileID: 302626685}
     - target: {fileID: 5563656250577079296, guid: bcc7cd80a189037419852ab13c997e47, type: 3}
       propertyPath: m_Name
       value: Network Manager

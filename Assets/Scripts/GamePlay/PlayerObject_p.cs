@@ -1,16 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using System;
 
 public class PlayerObject_p : MonoBehaviour
 {
     GameObject parent;
 
     List<Vector3> PositionList = new List<Vector3>(){
-        new Vector3(0f,0.1f,-1.84f),
-        new Vector3(0,0.1f,1.67f),
+        new Vector3(0f,0.1f,-1.1f),
+        new Vector3(0,0.1f,2.1f),
         new Vector3(-2.01f,0.1f,-0.17f),
         new Vector3(1.56f,0.1f,-0.17f)
     };
@@ -19,7 +17,6 @@ public class PlayerObject_p : MonoBehaviour
 // just like local position add to a property 
 // The property is the variable min and max that is in the force direction script of reference gameObject
 
-
     List<Vector3> RotationList = new List<Vector3>(){
         new Vector3(0,0,0),
         new Vector3(0,180,0),
@@ -27,12 +24,13 @@ public class PlayerObject_p : MonoBehaviour
         new Vector3(0,90,0)
     };
 
-    public void startingPostion(){
-
+    public void startingPostion()
+    {
         gameObject.transform.localPosition = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1];
     }
     
-    public void OnEnable(){
+    public void OnEnable()
+    {
         UIManager.resetStriker += startingPostion;
         gameObject.transform.localPosition = PositionList[PhotonNetwork.LocalPlayer.ActorNumber -1];
 
@@ -41,7 +39,8 @@ public class PlayerObject_p : MonoBehaviour
     //    Debug.Log("object position intialized");
     }
 
-    void OnDisable(){
+    void OnDisable()
+    {
         UIManager.resetStriker -= startingPostion;
     }
 
@@ -61,7 +60,6 @@ public class PlayerObject_p : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         parent = GameObject.FindWithTag("GameManager");
 
         gameObject.transform.parent = parent.transform;
@@ -71,16 +69,5 @@ public class PlayerObject_p : MonoBehaviour
         gameObject.transform.localRotation = Quaternion.Euler(RotationList[PhotonNetwork.LocalPlayer.ActorNumber -1]);
 
        // Debug.Log("Starto"); 
-
-
-
-
-
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

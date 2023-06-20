@@ -9,6 +9,7 @@ public class LevelPlayAds : MonoBehaviour
         IronSource.Agent.validateIntegration();
 
         await WaitDataRetrival();
+
         if (FirebaseSetup.fd.isShow == true)
         {
             IronSource.Agent.loadBanner(IronSourceBannerSize.BANNER, IronSourceBannerPosition.TOP);
