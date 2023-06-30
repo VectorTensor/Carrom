@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Realtime;
+
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] GameObject playButton;
@@ -15,13 +13,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [SerializeField] GameObject PlayerName; 
     // Start is called before the first frame update
 
-    void Awake(){
-        if(instance == null){
+    void Awake()
+    {
+        if(instance == null)
             instance = this;
-        }
     }
 
-    public static NetworkManager GetInstance(){
+    public static NetworkManager GetInstance()
+    {
         return instance;
     }
 
@@ -58,26 +57,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-
         Debug.Log("Created room",this);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Debug.Log("Room creation failed "+ message, this);
-
     }
-
 
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("Waiting");
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

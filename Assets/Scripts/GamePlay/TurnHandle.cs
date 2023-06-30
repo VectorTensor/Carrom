@@ -129,7 +129,7 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
     {
         //GameObject gm = PlayerList[turn-1];
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         Debug.Log("Players sucessfully added");
 
 
