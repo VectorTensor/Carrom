@@ -19,8 +19,8 @@ public class TurnHandle : MonoBehaviour , IOnEventCallback
 
     //Use Vector2 for UI component
     List<Vector3> PositionList = new List<Vector3>(){
-        new Vector3(0,-300f,0),  //350
-        new Vector3(0f,430f,0),
+        new Vector3(0,-400f,0),  //350
+        new Vector3(0f,500f,0),
         new Vector3(-2.01f,0.1f,-0.17f),
         new Vector3(1.56f,0.1f,-0.17f)
     };
