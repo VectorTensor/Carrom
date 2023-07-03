@@ -23,6 +23,6 @@ public class Exit : MonoBehaviour
         PhotonNetwork.LeaveRoom();
         PlayerLeftRoom?.Invoke();
 
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("MainMenu");
     }
 }
